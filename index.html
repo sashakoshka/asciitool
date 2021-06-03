@@ -21,6 +21,7 @@
         --nord13:#ebcb8b;
         --nord14:#a3be8c;
         --nord15:#b48ead;
+        --bgshade:#3b4252AA;
       }
       
       *{
@@ -90,8 +91,41 @@
           0 0 2px var(--nord1),
           0 0 2px var(--nord1),
           0 0 2px var(--nord1),
-          0 0 2px var(--nord1)
-        ;
+          0 0 2px var(--nord1);
+      }
+      
+      @media(prefers-color-scheme:light){
+        :root{
+          --bgshade:#d8dee9AA;
+        }
+        *{
+          color:var(--nord0);
+        }
+        *::selection{
+          background-color:var(--nord8);
+          text-shadow:none;
+        }
+        
+        body{
+          background-color:var(--nord6);
+        }
+        
+        input,textarea,button{
+          background-color:var(--nord4);
+        }
+        /* No idea why, but this just does not work properly */
+        input:active,textarea:active,button:active{
+          outline:2px solid var(--nord8);
+        }
+        
+        #editor{
+          text-shadow:
+            0 0 2px var(--nord4),
+            0 0 2px var(--nord4),
+            0 0 2px var(--nord4),
+            0 0 2px var(--nord4)
+          ;
+        }
       }
     </style>
   </head>
@@ -123,7 +157,8 @@
       
       fileload.onclick = () => {
         editor.style.background =
-          "linear-gradient(#3b4252AA, #3b4252AA),url('file://"
+          "linear-gradient(var(--bgshade), var(--bgshade)),"
+          + "url('file://"
           + fileinput.value + "') no-repeat center center";
         editor.style.backgroundSize =
           "calc(100% - 8px) calc(100% - 8px)";
