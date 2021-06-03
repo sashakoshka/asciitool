@@ -21,11 +21,16 @@
         --nord14:#a3be8c;
         --nord15:#b48ead;
       }
+      
       *{
         font-family:monospace;
         font-size:10pt;
         color:var(--nord6);
       }
+      *::selection{
+        background-color:var(--nord3)
+      }
+      
       body,html{
         height:100%;
         margin:0;
@@ -37,19 +42,39 @@
         align-items:center;
         justify-content:center;
       }
+      
       input,textarea,button{
         border:none;
-        margin:0;
+        margin:4px;
+        padding:4px;
+        background-color:var(--nord1);
+        border-radius:4px;
+      }
+      input:active,textarea:active,button:active{
+        outline:2px solid var(--nord3)
+      }
+      
+      #filecontrols{
+        min-width:256px;
+      }
+      #fileinput{
+        width:calc(100% - 72px);
+      }
+      #fileload{
+        width:48px;
+      }
+      #editor{
+        min-width:256px;
+        min-height:256px;
       }
     </style>
   </head>
   <body>
-    <header>
-      <input id="fileinput" placeholder="filepath"></input>
-      <button>Load</button>
-    </header>
     <main>
-      <textarea></textarea>
+      <div id="filecontrols">
+        <input id="fileinput" placeholder="filepath"></input><button id="fileload">Load</button>
+      </div>
+      <textarea id="editor"></textarea>
     </main>
   </body>
 </html>
