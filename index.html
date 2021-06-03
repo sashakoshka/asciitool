@@ -109,6 +109,10 @@
       var ins          = document.querySelector("#ins");
       var editor       = document.querySelector("#editor");
       
+      fileinput.onkeydown = (e) => {
+        if(e.keyCode == 13) fileload.onclick();
+      }
+      
       fileload.onclick = () => {
         editor.style.background =
           "linear-gradient(#3b4252AA, #3b4252AA),url('file://"
@@ -153,7 +157,7 @@
         var key = String.fromCharCode(
           e.which || e.charCode || e.keyCode
         );
-        if(key != "\n") {
+        if(e.keyCode != 13) {
             var text = editor.value;
             var caret = editor.selectionStart;
             
