@@ -85,6 +85,7 @@
         background-size:calc(100% - 8px) calc(100% - 8px);
         font-weight:bold;
         overflow:hidden;
+        word-wrap:break-word;
         text-shadow:
           0 0 2px var(--nord1),
           0 0 2px var(--nord1),
@@ -100,10 +101,10 @@
         <input id="fileinput" placeholder="filepath"><button id="fileload">Load</button>
       </div>
       <div id="doccontrols">
-        <button id="stretchmode">Stretch</button>
+        <input id="stretchmode" type="submit" value="Stretch">
         <button id="fill">Fill</button>
-        <button id="ins">Ins</button>
-        <input id="fontsize" placeholder="font-size" value="12" type="number">
+        <input id="ins" type="submit" value="Ins">
+        <input id="fontsize" placeholder="Size" value="12" type="number">
       </div>
       <textarea id="editor" spellcheck="false"></textarea>
     </main>
@@ -113,6 +114,7 @@
       var stretchmode  = document.querySelector("#stretchmode");
       var fill         = document.querySelector("#fill");
       var ins          = document.querySelector("#ins");
+      var fontsize     = document.querySelector("#fontsize");
       var editor       = document.querySelector("#editor");
       
       fileinput.onkeydown = (e) => {
@@ -127,15 +129,13 @@
           "calc(100% - 8px) calc(100% - 8px)";
       }
       
-      fileload.value & fileload.onclick();
-      
       stretchmode.onclick = () => {
-        if(stretchmode.innerText == "Scale") {
-          stretchmode.innerText = "Stretch";
+        if(stretchmode.value == "Scale") {
+          stretchmode.value = "Stretch";
           editor.style.backgroundSize =
             "calc(100% - 8px) calc(100% - 8px)";
         } else {
-          stretchmode.innerText = "Scale";
+          stretchmode.value = "Scale";
           editor.style.backgroundSize =
             "calc(100% - 8px) auto";
         }
@@ -144,22 +144,35 @@
       // Needs work...
       fill.onclick = () => {
         editor.value = "";
-        for(var y = 0; y < (editor.offsetHeight - 8) / 12; y++){
-          for(var x = 0; x < (editor.offsetWidth - 8) / 12; x++)
-            editor.value += " ";
+        for(
+          var y = 0;
+          y < (editor.offsetHeight - 8) / fontsize.value;
+          y++
+        ) {
+          for(
+            var x = 0;
+            x < (editor.offsetWidth - 8) / fontsize.value;
+            x++
+          ) editor.value += " ";
           editor.value += "\n";
         }
       }
       
       ins.onclick = () => {
-        if(ins.innerText == "Ins")
-          ins.innerText = "Over";
+        if(ins.value == "Ins")
+          ins.value = "Over";
         else
-          ins.innerText = "Ins";
+          ins.value = "Ins";
+      }
+      
+      fontsize.onchange = () => {
+        if(fontsize.value > 20) fontsize.value = 20;
+        if(fontsize.value < 4)  fontsize.value = 4;
+        editor.style.fontSize = fontsize.value + "px";
       }
       
       editor.onkeypress = (e) => {
-        if(ins.innerText == "Ins") return true;
+        if(ins.value == "Ins") return true;
         var key = String.fromCharCode(
           e.which || e.charCode || e.keyCode
         );
@@ -181,6 +194,11 @@
         }
         return true;
       }
+        
+      // We can take advantage of the fact that browsers tend
+      // to preserve input values after reload
+      fileload.value & fileload.onclick();
+      fontsize.value & fontsize.onchange();
     </script>
   </body>
 </html>

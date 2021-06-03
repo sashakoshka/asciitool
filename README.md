@@ -7,4 +7,4 @@ Tool to make ASCII art.
 * Scale/Stretch: Scales the image to fit, or stretches it
 * Fill: (Work in progress) Fills the canvas with spaces
 * Ins/Over: Sets insertion mode; Insert character at cursor, or overwrite character at cursor
-* Font size: Not implemented yet
+* Font size: Changes the size of the editor font
