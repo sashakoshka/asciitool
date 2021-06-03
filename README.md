@@ -3,6 +3,8 @@
 
 Tool to make ASCII art.
 
+This does not generate ASCII art, it's just a convenient way to use an image as a reference.
+
 * Load: Loads the image from the filepath specified in the input box
 * Scale/Stretch: Scales the image to fit, or stretches it
 * Fill: (Work in progress) Fills the canvas with spaces
