@@ -84,6 +84,7 @@
         min-height:256px;
         background-size:calc(100% - 8px) calc(100% - 8px);
         font-weight:bold;
+        overflow:hidden;
       }
     </style>
   </head>
@@ -95,6 +96,7 @@
       <div id="doccontrols">
         <button id="stretchmode">Stretch</button>
         <button id="fill">Fill</button>
+        <button id="ins">Ins</button>
         <input id="fontsize" placeholder="font-size" value="12" type="number">
       </div>
       <textarea id="editor"></textarea>
@@ -103,6 +105,8 @@
       var fileinput    = document.querySelector("#fileinput");
       var fileload     = document.querySelector("#fileload");
       var stretchmode  = document.querySelector("#stretchmode");
+      var fill         = document.querySelector("#fill");
+      var ins          = document.querySelector("#ins");
       var editor       = document.querySelector("#editor");
       
       fileload.onclick = () => {
@@ -125,6 +129,47 @@
           editor.style.backgroundSize =
             "calc(100% - 8px) auto";
         }
+      }
+      
+      // Needs work...
+      fill.onclick = () => {
+        editor.value = "";
+        for(var y = 0; y < (editor.offsetHeight - 8) / 12; y++){
+          for(var x = 0; x < (editor.offsetWidth - 8) / 12; x++)
+            editor.value += " ";
+          editor.value += "\n";
+        }
+      }
+      
+      ins.onclick = () => {
+        if(ins.innerText == "Ins")
+          ins.innerText = "Over";
+        else
+          ins.innerText = "Ins";
+      }
+      
+      editor.onkeypress = (e) => {
+        if(ins.innerText == "Ins") return true;
+        var key = String.fromCharCode(
+          e.which || e.charCode || e.keyCode
+        );
+        if(key != "\n") {
+            var text = editor.value;
+            var caret = editor.selectionStart;
+            
+            if(text[caret] == "\n") caret++;
+            
+            editor.value =
+              text.substring(0, caret) +
+              key +
+              text.substring(caret + 1);
+            
+            caret++;
+            editor.selectionStart = caret;
+            editor.selectionEnd   = caret;
+            return false;
+        }
+        return true;
       }
     </script>
   </body>
