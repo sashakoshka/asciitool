@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en_US">
   <head>
+    <meta charset="utf-8"/>
     <title>asciitool</title>
     <style>
       :root{
@@ -24,7 +25,7 @@
       
       *{
         font-family:monospace;
-        font-size:10pt;
+        font-size:12px;
         color:var(--nord6);
       }
       *::selection{
@@ -49,9 +50,14 @@
         padding:4px;
         background-color:var(--nord1);
         border-radius:4px;
+        min-width:0
       }
       input:active,textarea:active,button:active{
-        outline:2px solid var(--nord3)
+        outline:2px solid var(--nord3);
+      }
+      input[type=number]{
+        appearance:textfield;
+        text-align:center;
       }
       
       #filecontrols{
@@ -63,18 +69,46 @@
       #fileload{
         width:48px;
       }
+      #doccontrols{
+        display:flex
+      }
+      #doccontrols>*{
+        flex:2;
+      }
+      #fontsize{
+        flex:none;
+        width:40px
+      }
       #editor{
         min-width:256px;
         min-height:256px;
+        background-size:calc(100% - 8px) calc(100% - 8px)
+        !important;
       }
     </style>
   </head>
   <body>
     <main>
       <div id="filecontrols">
-        <input id="fileinput" placeholder="filepath"></input><button id="fileload">Load</button>
+        <input id="fileinput" placeholder="filepath"><button id="fileload">Load</button>
+      </div>
+      <div id="doccontrols">
+        <button id="stretchmode">Scale</button>
+        <button id="fill">Fill</button>
+        <input id="fontsize" placeholder="font-size" value="12" type="number">
       </div>
       <textarea id="editor"></textarea>
     </main>
+    <script>
+      var fileinput = document.querySelector("#fileinput");
+      var fileload  = document.querySelector("#fileload");
+      var editor    = document.querySelector("#editor");
+      
+      fileload.onclick = () => {
+        editor.style.background =
+          "linear-gradient(#3b4252AA, #3b4252AA),url(file://"
+          + fileinput.value + ") no-repeat center center";
+      }
+    </script>
   </body>
 </html>
