@@ -99,7 +99,7 @@
         <button id="ins">Ins</button>
         <input id="fontsize" placeholder="font-size" value="12" type="number">
       </div>
-      <textarea id="editor"></textarea>
+      <textarea id="editor" spellcheck="false"></textarea>
     </main>
     <script>
       var fileinput    = document.querySelector("#fileinput");
@@ -111,8 +111,8 @@
       
       fileload.onclick = () => {
         editor.style.background =
-          "linear-gradient(#3b4252AA, #3b4252AA),url(file://"
-          + fileinput.value + ") no-repeat center center";
+          "linear-gradient(#3b4252AA, #3b4252AA),url('file://"
+          + fileinput.value + "') no-repeat center center";
         editor.style.backgroundSize =
           "calc(100% - 8px) calc(100% - 8px)";
       }
