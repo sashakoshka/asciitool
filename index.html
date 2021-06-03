@@ -82,8 +82,8 @@
       #editor{
         min-width:256px;
         min-height:256px;
-        background-size:calc(100% - 8px) calc(100% - 8px)
-        !important;
+        background-size:calc(100% - 8px) calc(100% - 8px);
+        font-weight:bold;
       }
     </style>
   </head>
@@ -93,21 +93,38 @@
         <input id="fileinput" placeholder="filepath"><button id="fileload">Load</button>
       </div>
       <div id="doccontrols">
-        <button id="stretchmode">Scale</button>
+        <button id="stretchmode">Stretch</button>
         <button id="fill">Fill</button>
         <input id="fontsize" placeholder="font-size" value="12" type="number">
       </div>
       <textarea id="editor"></textarea>
     </main>
     <script>
-      var fileinput = document.querySelector("#fileinput");
-      var fileload  = document.querySelector("#fileload");
-      var editor    = document.querySelector("#editor");
+      var fileinput    = document.querySelector("#fileinput");
+      var fileload     = document.querySelector("#fileload");
+      var stretchmode  = document.querySelector("#stretchmode");
+      var editor       = document.querySelector("#editor");
       
       fileload.onclick = () => {
         editor.style.background =
           "linear-gradient(#3b4252AA, #3b4252AA),url(file://"
           + fileinput.value + ") no-repeat center center";
+        editor.style.backgroundSize =
+          "calc(100% - 8px) calc(100% - 8px)";
+      }
+      
+      fileload.value & fileload.onclick();
+      
+      stretchmode.onclick = () => {
+        if(stretchmode.innerText == "Scale") {
+          stretchmode.innerText = "Stretch";
+          editor.style.backgroundSize =
+            "calc(100% - 8px) calc(100% - 8px)";
+        } else {
+          stretchmode.innerText = "Scale";
+          editor.style.backgroundSize =
+            "calc(100% - 8px) auto";
+        }
       }
     </script>
   </body>
